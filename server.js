@@ -54,8 +54,6 @@ app.post("/email", async (req, res) => {
 
 app.use(errorController);
 
-app.set("port", port);
-
 app.listen(port, () => {
   console.log(`App listening at ${port}`);
 });
