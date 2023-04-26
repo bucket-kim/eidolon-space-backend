@@ -4,6 +4,7 @@ const app = express();
 const port = 4000;
 const cors = require("cors");
 const mongoose = require("mongoose");
+const { MongoClient } = require("mongodb");
 const Email = require("./models/email");
 const errorController = require("./errorController");
 
@@ -27,7 +28,7 @@ if (month < 10) {
 mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pkfjf7i.mongodb.net/eidolon-subscription-email`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
   )
   .then(() => console.log("connected"));
 
@@ -52,6 +53,10 @@ app.post("/email", async (req, res) => {
 
 app.use(errorController);
 
-app.listen(process.env.PORT || 4000, () => {
+const PORT = process.env.PORT || "4000";
+
+app.set("port", PORT);
+
+app.listen(PORT, () => {
   console.log(`App listening at ${port}`);
 });
