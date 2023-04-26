@@ -8,7 +8,11 @@ const Email = require("./models/email");
 const errorController = require("./errorController");
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://eidolon-backend.onrender.com",
+  })
+);
 
 const date = new Date();
 
