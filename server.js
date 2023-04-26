@@ -26,9 +26,10 @@ if (month < 10) {
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pkfjf7i.mongodb.net/eidolon-subscription-email`
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pkfjf7i.mongodb.net/?retryWrites=true&w=majority`
   )
-  .then(() => console.log("connected"));
+  .then(() => console.log("connected"))
+  .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
   console.log(res);
