@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 4000;
 const cors = require("cors");
+const port = process.env.PORT || "4000";
 const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb");
 const Email = require("./models/email");
@@ -53,10 +53,8 @@ app.post("/email", async (req, res) => {
 
 app.use(errorController);
 
-const PORT = process.env.PORT || "4000";
+app.set("port", port);
 
-app.set("port", PORT);
-
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(`App listening at ${port}`);
 });
