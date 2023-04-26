@@ -64,12 +64,6 @@ app.get("/", (req, res) => {
   res.send("Welcome");
 });
 
-app.post("/login", (req, res) => {
-  console.log(req.body);
-
-  res.send("valid");
-});
-
 app.post("/email", async (req, res) => {
   const { email } = req.body;
   const newEmail = new Email({
