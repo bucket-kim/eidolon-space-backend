@@ -26,8 +26,7 @@ if (month < 10) {
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pkfjf7i.mongodb.net/eidolon-subscription-email`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pkfjf7i.mongodb.net/eidolon-subscription-email`
   )
   .then(() => console.log("connected"));
 
