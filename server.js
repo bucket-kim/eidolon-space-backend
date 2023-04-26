@@ -7,12 +7,8 @@ const mongoose = require("mongoose");
 const Email = require("./models/email");
 const errorController = require("./errorController");
 
+app.use(cors());
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://eidolon-backend.onrender.com",
-  })
-);
 
 const date = new Date();
 
@@ -29,14 +25,12 @@ if (month < 10) {
 }
 
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pkfjf7i.mongodb.net/?retryWrites=true&w=majority`
-  )
+
+  .connect(`${process.env.DB_LINK}`)
   .then(() => console.log("connected"))
   .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  console.log(res);
   res.send("Welcome");
 });
 
@@ -51,7 +45,6 @@ app.post("/email", async (req, res) => {
     res.status(201).send({ message: "Success" });
   } catch (err) {
     res.status(400).send(err.message);
-    res.status(409).send(err.message);
   }
 });
 
