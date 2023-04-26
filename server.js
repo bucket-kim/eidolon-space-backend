@@ -33,6 +33,7 @@ mongoose
   .then(() => console.log("connected"));
 
 app.get("/", (req, res) => {
+  console.log(res);
   res.send("Welcome");
 });
 
