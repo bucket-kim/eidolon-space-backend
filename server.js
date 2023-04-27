@@ -2,11 +2,14 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const port = process.env.PORT || "4000";
 const mongoose = require("mongoose");
 const Email = require("./models/email");
 const errorController = require("./errorController");
 
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use(express.json());
 
@@ -25,10 +28,9 @@ if (month < 10) {
 }
 
 mongoose
-
   .connect(`${process.env.DB_LINK}`)
   .then(() => console.log("connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err.message));
 
 app.get("/", (req, res) => {
   res.send("Welcome");
@@ -44,7 +46,7 @@ app.post("/email", async (req, res) => {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(409).send(err.message);
   }
 });
 
