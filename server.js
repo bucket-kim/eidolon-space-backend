@@ -57,10 +57,10 @@ app.post("/email", async (req, res) => {
 
   let MailGenerator = new Mailgen({
     theme: "default",
-    product: {
-      name: "Mailgen",
-      link: "https://mailgen.js/",
-    },
+    // product: {
+    //   name: "Mailgen",
+    //   link: "https://mailgen.js/",
+    // },
   });
 
   let response = {
@@ -76,7 +76,7 @@ app.post("/email", async (req, res) => {
   let message = {
     from: process.env.USER,
     to: email,
-    subject: "Subscription",
+    subject: "Eidolon Space Subscription",
     html: mail,
   };
 
