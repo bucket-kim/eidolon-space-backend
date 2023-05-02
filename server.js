@@ -7,6 +7,8 @@ const port = process.env.PORT || "4000";
 const mongoose = require("mongoose");
 const Email = require("./models/email");
 const errorController = require("./errorController");
+const nodemailer = require("nodemailer");
+const Mailgen = require("mailgen");
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -42,6 +44,53 @@ app.post("/email", async (req, res) => {
     email,
     date: `${year}/${month}/${day}`,
   });
+
+  let config = {
+    service: "gmail",
+    auth: {
+      user: process.env.MAIL,
+      pass: process.env.PASS,
+    },
+  };
+
+  let transporter = nodemailer.createTransport(config);
+
+  let MailGenerator = new Mailgen({
+    theme: "default",
+    product: {
+      name: "Mailgen",
+      link: "https://mailgen.js/",
+    },
+  });
+
+  let response = {
+    body: {
+      intro:
+        "We welcome you to Eidolon Space. We will update our latest feeds and cool stuff as soon as possible. ",
+      outro: "Stay tuned for more updates!",
+    },
+  };
+
+  let mail = MailGenerator.generate(response);
+
+  let message = {
+    from: process.env.USER,
+    to: email,
+    subject: "Subscription",
+    html: mail,
+  };
+
+  transporter
+    .sendMail(message)
+    .then(() => {
+      return res.status(201).json({
+        msg: "you should receieve an email",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({ err });
+    });
+
   try {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
