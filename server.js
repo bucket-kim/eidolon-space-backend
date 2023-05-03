@@ -45,7 +45,7 @@ app.post("/email", async (req, res) => {
     date: `${year}/${month}/${day}`,
   });
 
-  let config = {
+  const config = {
     service: "gmail",
     auth: {
       user: process.env.MAIL,
@@ -53,9 +53,9 @@ app.post("/email", async (req, res) => {
     },
   };
 
-  let transporter = nodemailer.createTransport(config);
+  const transporter = nodemailer.createTransport(config);
 
-  let MailGenerator = new Mailgen({
+  const MailGenerator = new Mailgen({
     theme: "default",
     product: {
       name: "Mailgen",
@@ -63,7 +63,7 @@ app.post("/email", async (req, res) => {
     },
   });
 
-  let response = {
+  const response = {
     body: {
       intro:
         "We welcome you to Eidolon Space. We will update our latest feeds and cool stuff as soon as possible. ",
@@ -71,9 +71,9 @@ app.post("/email", async (req, res) => {
     },
   };
 
-  let mail = MailGenerator.generate(response);
+  const mail = MailGenerator.generate(response);
 
-  let message = {
+  const message = {
     from: process.env.USER,
     to: email,
     subject: "Eidolon Space Subscription",
@@ -83,19 +83,20 @@ app.post("/email", async (req, res) => {
   try {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
-    transporter
-      .sendMail(message)
-      .then(() => {
-        return res.status(201).json({
-          msg: "you should receieve an email",
-        });
-      })
-      .catch((err) => {
-        return res.status(500).json({ err });
-      });
   } catch (err) {
     res.status(409).send({ message: err.message });
   }
+
+  await transporter
+    .sendMail(message)
+    .then(() => {
+      return res.status(201).json({
+        msg: "you should receieve an email",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({ err });
+    });
 });
 
 app.use(errorController);
