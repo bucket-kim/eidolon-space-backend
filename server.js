@@ -83,20 +83,20 @@ app.post("/email", async (req, res) => {
   try {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
+
+    await transporter
+      .sendMail(message)
+      .then(() => {
+        return res.status(201).json({
+          msg: "you should receieve an email",
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({ err });
+      });
   } catch (err) {
     res.status(409).send({ message: err.message });
   }
-
-  await transporter
-    .sendMail(message)
-    .then(() => {
-      return res.status(201).json({
-        msg: "you should receieve an email",
-      });
-    })
-    .catch((err) => {
-      return res.status(500).json({ err });
-    });
 });
 
 app.use(errorController);
