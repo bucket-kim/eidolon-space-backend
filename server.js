@@ -91,12 +91,12 @@ app.post("/email", async (req, res) => {
       return res.status(500).json({ err });
     });
 
-  // try {
-  //   await newEmail.save();
-  //   res.status(201).send({ message: "Success" });
-  // } catch (err) {
-  //   res.status(400).send({ message: err.message });
-  // }
+  try {
+    await newEmail.save();
+    res.status(201).send({ message: "Success" });
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
 });
 
 app.use(errorController);
