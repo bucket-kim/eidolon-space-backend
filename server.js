@@ -95,7 +95,7 @@ app.post("/email", async (req, res) => {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
   } catch (err) {
-    res.status(409).send(err.message);
+    res.status(400).send({ message: err.message });
   }
 });
 
