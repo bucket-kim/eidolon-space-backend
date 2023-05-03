@@ -45,55 +45,55 @@ app.post("/email", async (req, res) => {
     date: `${year}/${month}/${day}`,
   });
 
-  const config = {
-    service: "gmail",
-    auth: {
-      user: process.env.MAIL,
-      pass: process.env.PASS,
-    },
-  };
+  // const config = {
+  //   service: "gmail",
+  //   auth: {
+  //     user: process.env.MAIL,
+  //     pass: process.env.PASS,
+  //   },
+  // };
 
-  const transporter = nodemailer.createTransport(config);
+  // const transporter = nodemailer.createTransport(config);
 
-  const MailGenerator = new Mailgen({
-    theme: "default",
-    product: {
-      name: "Mailgen",
-      link: "https://mailgen.js/",
-    },
-  });
+  // const MailGenerator = new Mailgen({
+  //   theme: "default",
+  //   product: {
+  //     name: "Mailgen",
+  //     link: "https://mailgen.js/",
+  //   },
+  // });
 
-  const response = {
-    body: {
-      intro:
-        "We welcome you to Eidolon Space. We will update our latest feeds and cool stuff as soon as possible. ",
-      outro: "Stay tuned for more updates!",
-    },
-  };
+  // const response = {
+  //   body: {
+  //     intro:
+  //       "We welcome you to Eidolon Space. We will update our latest feeds and cool stuff as soon as possible. ",
+  //     outro: "Stay tuned for more updates!",
+  //   },
+  // };
 
-  const mail = MailGenerator.generate(response);
+  // const mail = MailGenerator.generate(response);
 
-  const message = {
-    from: process.env.USER,
-    to: email,
-    subject: "Eidolon Space Subscription",
-    html: mail,
-  };
+  // const message = {
+  //   from: process.env.USER,
+  //   to: email,
+  //   subject: "Eidolon Space Subscription",
+  //   html: mail,
+  // };
 
   try {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
 
-    await transporter
-      .sendMail(message)
-      .then(() => {
-        return res.status(201).json({
-          msg: "you should receieve an email",
-        });
-      })
-      .catch((err) => {
-        return res.status(500).json({ err });
-      });
+    // await transporter
+    //   .sendMail(message)
+    //   .then(() => {
+    //     return res.status(201).json({
+    //       msg: "you should receieve an email",
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     return res.status(500).json({ err });
+    //   });
   } catch (err) {
     res.status(409).send({ message: err.message });
   }
