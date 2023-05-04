@@ -83,19 +83,17 @@ app.post("/email", async (req, res) => {
   try {
     await newEmail.save();
     res.status(201).send({ message: "Success" });
-
-    // await transporter
-    //   .sendMail(message)
-    //   .then(() => {
-    //     return res.status(201).json({
-    //       msg: "you should receieve an email",
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     return res.status(500).json({ err });
-    //   });
   } catch (err) {
     return res.status(409).send({ message: err.message });
+  }
+  try {
+    await transporter.sendMail(message).then(() => {
+      return res.status(201).json({
+        msg: "you should receieve an email",
+      });
+    });
+  } catch (err) {
+    return res.status(500).json({ err });
   }
 });
 
