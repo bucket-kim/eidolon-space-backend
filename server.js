@@ -95,7 +95,7 @@ app.post("/email", async (req, res) => {
         return res.status(500).json({ err });
       });
   } catch (err) {
-    res.status(409).send({ message: err.message });
+    return res.status(409).send({ message: err.message });
   }
 });
 
