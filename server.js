@@ -80,33 +80,22 @@ app.post("/email", async (req, res) => {
     html: mail,
   };
 
-  transporter
-    .sendMail(message)
-    .then(() => {
-      return res.status(201).json({
-        msg: "you should receieve an email",
-      });
-    })
-    .catch((err) => {
-      return res.status(500).json({ err });
-    });
-
   try {
     await newEmail.save();
     // res.status(201).send({ message: "Success" });
-    transporter.sendMail(message).then(() => {
-      return res
-        .status(201)
-        .json({
-          msg: "you should receieve an email",
-        })
-        .catch((err) => {
-          return res.status(500).json({ err });
-        });
-    });
   } catch (err) {
     return res.status(409).send({ message: err.message });
   }
+
+  transporter.sendMail(message, (err, info) => {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      console.log(`Email sent: ${info.response}`);
+      res.send("success");
+    }
+  });
 });
 
 app.use(errorController);
