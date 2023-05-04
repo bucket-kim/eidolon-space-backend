@@ -45,6 +45,13 @@ app.post("/email", async (req, res) => {
     date: `${year}/${month}/${day}`,
   });
 
+  try {
+    await newEmail.save();
+    res.status(201).send({ message: "Success" });
+  } catch (err) {
+    return res.status(409).send({ message: err.message });
+  }
+
   const config = {
     service: "gmail",
     auth: {
@@ -79,13 +86,6 @@ app.post("/email", async (req, res) => {
     subject: "Eidolon Space Subscription",
     html: mail,
   };
-
-  try {
-    await newEmail.save();
-    res.status(201).send({ message: "Success" });
-  } catch (err) {
-    return res.status(409).send({ message: err.message });
-  }
 
   transporter
     .sendMail(message)
