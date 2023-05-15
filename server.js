@@ -66,8 +66,8 @@ app.post("/email", async (req, res) => {
   const response = {
     body: {
       intro:
-        "We welcome you to Eidolon Space. We will update our latest feeds and cool stuff as soon as possible. ",
-      outro: "Stay tuned for more updates!",
+        "Congratulations, as a subscriber you are the first to join us on a journey to unlock a realm of boundless possibilities. With exclusive project launches and hidden identities, we invite you to explore a universe where art transcends the conventional, blurring the lines between reality and imagination. The road ahead may be shrouded in mystery, but we promise you an unforgettable experience of uncharted territories and unparalleled creativity. Get ready to witness the birth of something truly extraordinary.",
+      outro: "Stay tuned for more updates.",
     },
   };
 
