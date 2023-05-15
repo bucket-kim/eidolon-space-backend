@@ -48,8 +48,8 @@ app.post("/email", async (req, res) => {
   const config = {
     service: "gmail",
     auth: {
-      user: process.env.MAIL,
-      pass: process.env.PASS,
+      user: "subscribe@eidolon.space",
+      pass: "aeymncaugbumenzx",
     },
   };
 
@@ -74,7 +74,7 @@ app.post("/email", async (req, res) => {
   const mail = MailGenerator.generate(response);
 
   const message = {
-    from: process.env.MAIL,
+    from: "subscribe@eidolon.space",
     to: email,
     subject: "Eidolon Space Subscription",
     html: mail,
