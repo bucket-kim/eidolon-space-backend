@@ -74,7 +74,7 @@ app.post("/email", async (req, res) => {
   const mail = MailGenerator.generate(response);
 
   const message = {
-    from: process.env.USER,
+    from: process.env.MAIL,
     to: email,
     subject: "Eidolon Space Subscription",
     html: mail,
